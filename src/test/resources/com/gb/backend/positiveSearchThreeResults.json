@@ -1,0 +1,25 @@
+{
+  "results": [
+    {
+      "id": 631814,
+      "title": "$50,000 Burger",
+      "image": "https://spoonacular.com/recipeImages/631814-312x231.jpg",
+      "imageType": "jpg"
+    },
+    {
+      "id": 642539,
+      "title": "Falafel Burger",
+      "image": "https://spoonacular.com/recipeImages/642539-312x231.png",
+      "imageType": "png"
+    },
+    {
+      "id": 663050,
+      "title": "Tex-Mex Burger",
+      "image": "https://spoonacular.com/recipeImages/663050-312x231.jpg",
+      "imageType": "jpg"
+    }
+  ],
+  "offset": 0,
+  "number": 3,
+  "totalResults": 54
+}
