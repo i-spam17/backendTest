@@ -1,4 +1,4 @@
-package com.gb.backend;
+package com.gb.backend.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-public class UsersConnectData {
+public class UsersConnectDataRequest {
     private String username;
     private String firstName;
     private String lastName;

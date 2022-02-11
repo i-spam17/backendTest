@@ -24,7 +24,7 @@ import lombok.Data;
 })
 @Generated("jsonschema2pojo")
 @Data
-public class Add2MealPlan {
+public class Add2MealPlanResponse {
     @JsonProperty("nutritionSummary")
     public NutritionSummary nutritionSummary;
     @JsonProperty("nutritionSummaryBreakfast")

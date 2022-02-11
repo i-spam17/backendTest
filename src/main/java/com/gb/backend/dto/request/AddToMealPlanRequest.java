@@ -5,10 +5,10 @@ import lombok.*;
 
 @Data
 @Builder
-public class AddToMealPlan extends CommonRequest {
+public class AddToMealPlanRequest extends CommonRequest {
     @Builder.Default
     @JsonProperty("date")
-    public Integer date = Helpers.currentDataToInt("2022-03-01");
+    public Object date = Helpers.currentDataToInt("2022-03-01");
 
     @Builder.Default
     @JsonProperty("slot")

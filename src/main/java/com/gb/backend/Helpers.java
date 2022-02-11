@@ -9,6 +9,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 
 public class Helpers {
@@ -25,12 +26,12 @@ public class Helpers {
             e.printStackTrace();
         }
         date = java.sql.Date.valueOf(str);
-
+        TimeZone.setDefault(TimeZone.getTimeZone("America/Alaska"));
         return (int) (date.getTime() / 1000);
     }
 
     public static void main(String[] args) {
-        String date = "2022-03-02";
+        String date = "2022-03-04";
         System.out.println("Date : " + currentDataToInt(date) +
                 "\nCheck Date : " + new Date(((long) currentDataToInt(date)) * 1000L));
     }

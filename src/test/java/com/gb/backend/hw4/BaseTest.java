@@ -19,12 +19,17 @@ public abstract class BaseTest {
     final static String hash = "d0264aa93256d825bf3528b1ba88db4b392b8e39";
     final static String userName = "12301234";
 
-    ResponseSpecification getResponseSpec = new ResponseSpecBuilder()
+    ResponseSpecification responseSpec = new ResponseSpecBuilder()
             .expectStatusCode(200)
             .expectContentType(ContentType.JSON)
             .build();
 
-    RequestSpecification getRequestSpec = new RequestSpecBuilder()
+    ResponseSpecification negativeResponseSpec = new ResponseSpecBuilder()
+            .expectStatusCode(400)
+            .expectContentType(ContentType.JSON)
+            .build();
+
+    RequestSpecification requestSpec = new RequestSpecBuilder()
             .setContentType(ContentType.JSON)
             .addQueryParam("hash", hash)
             .build();

@@ -1,12 +1,13 @@
 package com.gb.backend.hw4;
 
-import com.gb.backend.dto.request.AddToMealPlan;
-import com.gb.backend.dto.response.Add2MealPlan;
+import com.gb.backend.dto.request.AddToMealPlanRequest;
+import com.gb.backend.dto.response.Add2MealPlanResponse;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.File;
 import java.util.stream.Stream;
@@ -28,87 +29,45 @@ public class AddMealPlanPositiveTest extends BaseTest {
     @MethodSource("checkAddToMealPlanData")
     void checkAddToMealPlan(String path) {
         given()
-                .spec(getRequestSpec)
+                .spec(requestSpec)
                 .body(new File(path))
                 .when()
                 .post("/mealplanner/" + userName + "/items")
                 .prettyPeek()
                 .then()
-                .spec(getResponseSpec)
+                .spec(responseSpec)
                 .body("status", is("success"));
     }
 
-    @Test
-    void checkAddToMealPlanFaker() {
-        AddToMealPlan addToMealPlan = AddToMealPlan.builder().build();
+    //по сути дубляж предыдущего теста другим способом - учимся!)
+    @ParameterizedTest
+    @ValueSource(ints = {1,2,3})
+    void checkAddToMealPlanFaker(Integer slot) {
+        AddToMealPlanRequest addToMealPlanRequest = AddToMealPlanRequest.builder().build();
+        addToMealPlanRequest.setSlot(slot);
+
         given()
-                .spec(getRequestSpec)
-                .body(addToMealPlan)
+                .spec(requestSpec)
+                .body(addToMealPlanRequest)
                 .when()
                 .post("/mealplanner/" + userName + "/items")
                 .prettyPeek()
                 .then()
-                .spec(getResponseSpec)
+                .spec(responseSpec)
                 .body("status", is("success"));
     }
-
-    //    @Test
-//    void checkMealPlanTemplates() {
-//        given()
-//                .spec(getRequestSpec)
-//                .when()
-//                .get("/mealplanner/" + userName + "/templates")
-//                .prettyPeek()
-//                .then()
-//                .spec(getResponseSpec);
-//    }
-
-//    @Test
-//    void checkGetMealPlanWeek() throws JsonProcessingException {
-//      String jsonAsString = given()
-//                .spec(getRequestSpec)
-//                .when()
-//                .get("/mealplanner/" + userName + "/day/2022-03-01")
-//                .prettyPeek()
-//                .then()
-//                .spec(getResponseSpec)
-//                .extract().body().asPrettyString();
-//
-//        ObjectMapper mapper = new ObjectMapper()
-//                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-//
-//        AddToMealPlan readValue = mapper.readValue(jsonAsString, AddToMealPlan.class);
-//
-//        assertThat(readValue.getDate(), equalTo(1646092800));
-//    }
 
     @Test
     void checkGetMealPlanWeek2() {
         given()
-                .spec(getRequestSpec)
+                .spec(requestSpec)
                 .when()
                 .get("/mealplanner/" + userName + "/day/2022-03-01")
                 .prettyPeek()
                 .then()
-                .spec(getResponseSpec)
-                .extract().body().as(Add2MealPlan.class);
+                .spec(responseSpec)
+                .extract().body().as(Add2MealPlanResponse.class);
     }
-
-//    @Test
-//    void checkClearMealPlanDay() {
-//        given()
-//                .spec(getRequestSpec)
-//                .when()
-//                .delete("/mealplanner/" + userName + "/day/2022-03-01")
-//                .prettyPeek()
-//                .then()
-//                .spec(getResponseSpec);
-//    }
-
-//    @AfterEach
-//    void tearDown() {
-//
-//    }
 
     @AfterAll
     static void afterAll() {

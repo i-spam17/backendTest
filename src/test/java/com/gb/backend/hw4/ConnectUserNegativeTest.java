@@ -1,19 +1,17 @@
 package com.gb.backend.hw4;
 
-import com.gb.backend.UsersConnectData;
+import com.gb.backend.dto.request.UsersConnectDataRequest;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.given;
 
+//эти тесты делаю без параметризации
 public class ConnectUserNegativeTest extends BaseTest {
-
-
-
     @Test
     void checkSendEmptyField() {
         given()
                 .contentType(ContentType.JSON)
-                .body(UsersConnectData
+                .body(UsersConnectDataRequest
                         .builder()
                         .username("")
                         .firstName("test_name2")
@@ -24,15 +22,14 @@ public class ConnectUserNegativeTest extends BaseTest {
                 .post("/users/connect")
                 .prettyPeek()
                 .then()
-                .statusCode(400)
-                .contentType(ContentType.JSON);
+                .spec(negativeResponseSpec);
     }
 
     @Test
     void checkDataTypeSubstitution() {
         given()
                 .contentType(ContentType.JSON)
-                .body(UsersConnectData
+                .body(UsersConnectDataRequest
                         .builder()
                         .username("test_name1")
                         .firstName("test_name2")
@@ -43,23 +40,21 @@ public class ConnectUserNegativeTest extends BaseTest {
                 .post("/users/connect")
                 .prettyPeek()
                 .then()
-                .statusCode(400)
-                .contentType(ContentType.JSON);
+                .spec(negativeResponseSpec);
     }
 
     @Test
     void checkSendNoneFields() {
         given()
                 .contentType(ContentType.JSON)
-                .body(UsersConnectData
+                .body(UsersConnectDataRequest
                         .builder()
                         .build())
                 .when()
                 .post("/users/connect")
                 .prettyPeek()
                 .then()
-                .statusCode(400)
-                .contentType(ContentType.JSON);
+                .spec(negativeResponseSpec);
     }
 
     @Test
@@ -71,22 +66,7 @@ public class ConnectUserNegativeTest extends BaseTest {
                 .post("/users/connect")
                 .prettyPeek()
                 .then()
-                .statusCode(400)
-                .contentType(ContentType.JSON);
+                .spec(negativeResponseSpec);
     }
-
-
-
-//    @AfterAll
-//    static void afterAll() {
-//        given()
-//                .contentType(ContentType.JSON)
-//                .body("")
-//                .when()
-//                .delete("/mealplanner/" + userName + "/day/" + "" +":date ? hash = ")
-//                .prettyPeek()
-//                .then()
-//                .statusCode(200);
-//    }
 
 }
