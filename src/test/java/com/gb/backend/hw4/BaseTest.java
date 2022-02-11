@@ -1,9 +1,11 @@
 package com.gb.backend.hw4;
 
-import com.gb.backend.UsersConnectData;
 import io.restassured.RestAssured;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
-import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
+import io.restassured.specification.ResponseSpecification;
 import org.junit.jupiter.api.BeforeAll;
 
 import java.util.concurrent.TimeUnit;
@@ -14,10 +16,22 @@ import static org.hamcrest.Matchers.lessThan;
 public abstract class BaseTest {
     final static String VALUE_API_KEY = "1af43837fe624816b70292f78e556a0c";
     final static String KEY_API_KEY = "apiKey";
-    static String hash;
-    static String spoonacularPassword;
-    static Response getUserData;
-    static String userName;
+    final static String hash = "d0264aa93256d825bf3528b1ba88db4b392b8e39";
+    final static String userName = "12301234";
+
+    ResponseSpecification getResponseSpec = new ResponseSpecBuilder()
+            .expectStatusCode(200)
+            .expectContentType(ContentType.JSON)
+            .build();
+
+    RequestSpecification getRequestSpec = new RequestSpecBuilder()
+            .setContentType(ContentType.JSON)
+            .addQueryParam("hash", hash)
+            .build();
+
+//for UI
+//    String spoonacularPassword = "cheesybroccolipotatoeson1pearnectar";
+
 
     @BeforeAll
     static void beforeAll() {
@@ -31,26 +45,5 @@ public abstract class BaseTest {
                 .expect()
                 .time(lessThan(10L), TimeUnit.SECONDS)
                 .log().body();
-
-        getUserData = given()
-                .contentType(ContentType.JSON)
-                .body(UsersConnectData
-                        .builder()
-                        .username("123")
-                        .firstName("test_name2")
-                        .lastName("test_name3")
-                        .email("test@testMail.mail")
-                        .build())
-                .when()
-                .post("/users/connect")
-                .prettyPeek()
-                .then()
-                .statusCode(200)
-                .extract().response();
-
-        spoonacularPassword = getUserData.jsonPath().getString("spoonacularPassword");
-        hash = getUserData.jsonPath().getString("hash");
-        userName = getUserData.jsonPath().getString("username");
     }
-
 }
