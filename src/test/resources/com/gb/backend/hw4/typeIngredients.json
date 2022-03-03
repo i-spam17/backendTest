@@ -1,0 +1,13 @@
+{
+  "date": 1646161200,
+  "slot": 1,
+  "position": 1,
+  "type": "INGREDIENTS",
+  "value": {
+    "ingredients": [
+      {
+        "name": "2 apples"
+      }
+    ]
+  }
+}
